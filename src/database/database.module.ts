@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     host: 'localhost',
     port: 5432,
     username: 'root',
-    password: 'root',
+    password: '',
     database: 'demo_app',
   })]
 })

@@ -1,12 +1,16 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { GraphQLModule } from '@nestjs/graphql';
 import { DatabaseModule } from './database/database.module';
-import { ArticleModule } from './module/article/article.module';
+import { BorrowerModule } from './borrower/borrower.module';
 
 @Module({
-  imports: [DatabaseModule, ArticleModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [DatabaseModule, GraphQLModule.forRoot<ApolloDriverConfig>({
+    driver: ApolloDriver,
+    autoSchemaFile: true,
+    debug: false,
+    playground: false,
+    typePaths: ['./**/*.graphql'],
+  }), BorrowerModule,],
 })
-export class AppModule {}
+export class AppModule { }
