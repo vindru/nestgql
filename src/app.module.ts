@@ -1,16 +1,22 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { DatabaseModule } from './database/database.module';
-import { BorrowerModule } from './borrower/borrower.module';
+import { BorrowerProfileSettingsModule } from './borrower-profile-settings/borrower-profile-settings.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BorrowerProfileSetting } from './borrower-profile-settings/borrower-profile-setting.entity';
 
+//Todo: Add ormconfig from db/ormconfig.ts, its causing error right now.
 @Module({
-  imports: [DatabaseModule, GraphQLModule.forRoot<ApolloDriverConfig>({
-    driver: ApolloDriver,
-    autoSchemaFile: true,
-    debug: false,
-    playground: false,
-    typePaths: ['./**/*.graphql'],
-  }), BorrowerModule,],
+  imports: [BorrowerProfileSettingsModule, TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'root',
+    password: '',
+    database: 'demo_app_db',
+    synchronize: false,
+    entities: [BorrowerProfileSetting],
+    cli: {
+      migrationsDir: 'src/db/migration',
+    }
+  })]
 })
 export class AppModule { }
