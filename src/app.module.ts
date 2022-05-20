@@ -11,7 +11,7 @@ import { BorrowerProfileSetting } from './borrower-profile-settings/borrower-pro
     port: 5432,
     username: 'root',
     password: '',
-    database: 'demo_app_db',
+    database: 'demo_app_pg',
     synchronize: false,
     entities: [BorrowerProfileSetting],
     cli: {

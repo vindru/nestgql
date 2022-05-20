@@ -6,7 +6,7 @@ const ormConfig: PostgresConnectionOptions = {
   port: 5432,
   username: 'root',
   password: '',
-  database: 'demo_app_db',
+  database: 'demo_app_pg',
   synchronize: false,
   entities: ['src/**/*.entity.ts'],
   migrations: ['src/db/migration/*.ts'],

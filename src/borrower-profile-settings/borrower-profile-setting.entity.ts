@@ -12,13 +12,11 @@ export class BorrowerProfileSetting {
   @Column({ name: 'borrower_id', nullable: false })
   borrowerId: string;
 
-  public updated_at: Date;
   @CreateDateColumn({
     type: 'timestamp without time zone',
     name: 'created_at',
     precision: 6,
     nullable: false,
-    default: () => "CURRENT_TIMESTAMP(6)",
     transformer: UTCDateTransformer,
   })
   createdAt: Date;

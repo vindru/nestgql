@@ -13,8 +13,14 @@ export class BorrowerProfileSettingsService {
     private borrowerProfileSettingsRepository: BorrowerProfileSettingsRepository) { }
 
   async create(createBorrowerProfileSettingsDto: CreateBorrowerProfileSettingsDto): Promise<BorrowerProfileSetting> {
-    const borrowerProfileSetting = this.borrowerProfileSettingsRepository.create(createBorrowerProfileSettingsDto);
-    await this.borrowerProfileSettingsRepository.save(borrowerProfileSetting);
+    let borrowerProfileSetting: BorrowerProfileSetting = await this.borrowerProfileSettingsRepository.findOne({ borrowerId: createBorrowerProfileSettingsDto.borrowerId });
+    if (!borrowerProfileSetting) {
+      borrowerProfileSetting = this.borrowerProfileSettingsRepository.create(createBorrowerProfileSettingsDto);
+      const now = new Date();
+      borrowerProfileSetting.createdAt = now;
+      borrowerProfileSetting.updatedAt = now;
+      await this.borrowerProfileSettingsRepository.save(borrowerProfileSetting);
+    }
     return borrowerProfileSetting;
   }
 
@@ -29,6 +35,8 @@ export class BorrowerProfileSettingsService {
   async updateAutoSaveByBorrowerId(borrowerId: string, updateBorrowerProfileSettingsDto: UpdateBorrowerProfileSettingsDto): Promise<BorrowerProfileSetting> {
     const borrowerProfileSetting: BorrowerProfileSetting = await this.findByBorrowerId(borrowerId);
     borrowerProfileSetting.autoSave = updateBorrowerProfileSettingsDto.autoSave;
+    const now = new Date();
+    borrowerProfileSetting.updatedAt = now;
     const updatedBorrowerProfileSetting = await this.borrowerProfileSettingsRepository.save(borrowerProfileSetting);
     return updatedBorrowerProfileSetting;
   }
