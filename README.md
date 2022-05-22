@@ -49,7 +49,7 @@ $ yarn start:prod
 
 ```bash
 # Create Migrations from entity
-$ yarn migration-generate BorrowerProfileSettingsMigrations
+$ yarn migration-generate <Entity-name>
 
 # Migrate table to db
 $  yarn migration-run

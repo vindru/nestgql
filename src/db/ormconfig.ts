@@ -1,17 +1,17 @@
+import { BorrowerProfileSetting } from "src/borrower-profile-settings/borrower-profile-setting.entity";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-const ormConfig: PostgresConnectionOptions = {
+const config: PostgresConnectionOptions = {
   type: 'postgres',
   host: 'localhost',
   port: 5432,
   username: '',
   password: '',
-  database: 'demo_app_pg',
+  database: 'demo_2',
   synchronize: false,
-  entities: ['src/**/*.entity.ts'],
-  migrations: ['src/db/migration/*.ts'],
+  entities: [BorrowerProfileSetting],
   cli: {
     migrationsDir: 'src/db/migration',
   }
 }
-export default ormConfig;
+export default config;
