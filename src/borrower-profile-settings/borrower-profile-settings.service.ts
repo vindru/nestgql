@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BorrowerProfileSetting } from './borrower-profile-setting.entity';
 import { BorrowerProfileSettingsRepository } from './borrower-profile-settings.repository';
-import { CreateBorrowerProfileSettingsDto } from './dto/create-borrower-profile-settings.dto';
-import { UpdateBorrowerProfileSettingsDto } from './dto/update-borrower-profile-settings.dto';
+import { CreateBorrowerProfileSettingsInput } from './dto/create-borrower-profile-settings.input';
+import { UpdateBorrowerProfileSettingsInput } from './dto/update-borrower-profile-settings.input';
 
 @Injectable()
 export class BorrowerProfileSettingsService {
@@ -12,10 +12,10 @@ export class BorrowerProfileSettingsService {
     @InjectRepository(BorrowerProfileSettingsRepository)
     private borrowerProfileSettingsRepository: BorrowerProfileSettingsRepository) { }
 
-  async create(createBorrowerProfileSettingsDto: CreateBorrowerProfileSettingsDto): Promise<BorrowerProfileSetting> {
-    let borrowerProfileSetting: BorrowerProfileSetting = await this.borrowerProfileSettingsRepository.findOne({ borrowerId: createBorrowerProfileSettingsDto.borrowerId });
+  async create(createBorrowerProfileSettingsInput: CreateBorrowerProfileSettingsInput): Promise<BorrowerProfileSetting> {
+    let borrowerProfileSetting: BorrowerProfileSetting = await this.borrowerProfileSettingsRepository.findOne({ borrowerId: createBorrowerProfileSettingsInput.borrowerId });
     if (!borrowerProfileSetting) {
-      borrowerProfileSetting = this.borrowerProfileSettingsRepository.create(createBorrowerProfileSettingsDto);
+      borrowerProfileSetting = this.borrowerProfileSettingsRepository.create(createBorrowerProfileSettingsInput);
       const now = new Date();
       borrowerProfileSetting.createdAt = now;
       borrowerProfileSetting.updatedAt = now;
@@ -32,9 +32,9 @@ export class BorrowerProfileSettingsService {
     return borrowerProfileSetting;
   }
 
-  async updateAutoSaveByBorrowerId(borrowerId: string, updateBorrowerProfileSettingsDto: UpdateBorrowerProfileSettingsDto): Promise<BorrowerProfileSetting> {
+  async updateAutoSaveByBorrowerId(borrowerId: string, updateBorrowerProfileSettingsInput: UpdateBorrowerProfileSettingsInput): Promise<BorrowerProfileSetting> {
     const borrowerProfileSetting: BorrowerProfileSetting = await this.findByBorrowerId(borrowerId);
-    borrowerProfileSetting.autoSave = updateBorrowerProfileSettingsDto.autoSave;
+    borrowerProfileSetting.autoSave = updateBorrowerProfileSettingsInput.autoSave;
     const now = new Date();
     borrowerProfileSetting.updatedAt = now;
     const updatedBorrowerProfileSetting = await this.borrowerProfileSettingsRepository.save(borrowerProfileSetting);
