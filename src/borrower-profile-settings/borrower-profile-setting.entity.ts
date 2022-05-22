@@ -1,6 +1,5 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { type } from "os";
-import { UTCDateTransformer } from "src/transformers/utc-date.transformer";
+import { Field, ObjectType } from "@nestjs/graphql";
+import { UTCDateTransformer } from "../../src/transformers/utc-date.transformer";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('borrower_profile_settings')

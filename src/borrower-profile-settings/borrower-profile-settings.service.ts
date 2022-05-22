@@ -19,7 +19,7 @@ export class BorrowerProfileSettingsService {
       const now = new Date();
       borrowerProfileSetting.createdAt = now;
       borrowerProfileSetting.updatedAt = now;
-      await this.borrowerProfileSettingsRepository.save(borrowerProfileSetting);
+      borrowerProfileSetting = await this.borrowerProfileSettingsRepository.save(borrowerProfileSetting);
     }
     return borrowerProfileSetting;
   }

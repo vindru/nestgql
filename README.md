@@ -38,6 +38,8 @@ $ npm install
 # development
 $ yarn start
 
+Goto: http://localhost:3000/graphql
+
 # watch mode
 $ yarn start:dev
 

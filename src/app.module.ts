@@ -6,7 +6,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import config from './db/ormconfig';
 
-//Todo: Add ormconfig from db/ormconfig.ts, its causing error right now.
 @Module({
   imports: [TypeOrmModule.forRoot(config), GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
